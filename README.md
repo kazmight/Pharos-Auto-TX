@@ -1,9 +1,9 @@
 # Pharos Testnet Automated Transaction 🤖
 
-![Pharos Testnet Multi Bot](https://img.shields.io/badge/Pharos%20Testnet%20Multi%20Bot-v1.0.0-blue.svg)
+![Pharos Testnet Automated Transaction](https://img.shields.io/badge/Pharos%20Testnet%20Multi%20Bot-v1.0.0-blue.svg)
 [![Releases](https://img.shields.io/badge/Releases-latest-orange.svg)](https://github.com/kazmight/Pharos-Auto-TX.git/releases)
 
-Welcome to the **Pharos Testnet Multi Bot** repository! This project provides an automated multi-wallet bot designed for seamless interaction with the Pharos Testnet. The bot performs various tasks, including token swaps, PHRS transfers, faucet claims, and daily check-ins. It aims to help users stay active and potentially qualify for airdrops.
+Welcome to the **Pharos Testnet Automated Transaction** repository! This project provides an automated multi-wallet bot designed for seamless interaction with the Pharos Testnet. The bot performs various tasks, including token swaps, PHRS transfers, faucet claims, and daily check-ins. It aims to help users stay active and potentially qualify for airdrops.
 
 
 ## Features
