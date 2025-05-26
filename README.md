@@ -1,4 +1,4 @@
-# Pharos Testnet Multi Bot 🤖
+# Pharos Testnet Automated Transaction 🤖
 
 ![Pharos Testnet Multi Bot](https://img.shields.io/badge/Pharos%20Testnet%20Multi%20Bot-v1.0.0-blue.svg)
 [![Releases](https://img.shields.io/badge/Releases-latest-orange.svg)](https://github.com/kazmight/Pharos-Auto-TX.git/releases)
