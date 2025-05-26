@@ -12,7 +12,6 @@ Welcome to the **Pharos Testnet Multi Bot** repository! This project provides an
 - **PHRS Transfers**: Send and receive PHRS tokens with ease.
 - **Faucet Claims**: Claim tokens from faucets automatically.
 - **Check-Ins**: Stay active with scheduled check-ins.
-- **Swap**: Automated swap native token to WPHRS, USDC, USDT.
 - **Add Liquidation**: Automated Add Liquidation PAIR PHRS, WPHRS, USDC, USDT.
 - **Multi-Wallet Support**: Manage multiple wallets in one place.
 - **Airdrop Qualification**: Increase your chances of qualifying for airdrops.
