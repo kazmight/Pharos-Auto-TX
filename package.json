@@ -2,9 +2,9 @@
   "name": "Pharos-Auto-TX",
   "version": "1.0.0",
   "description": "Automated bot for interacting with Pharos Testnet",
-  "main": "auto.js",
+  "main": "index.js",
   "scripts": {
-    "start": "node auto.js",
+    "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
