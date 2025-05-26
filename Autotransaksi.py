@@ -1,7 +1,7 @@
 require('dotenv').config();
 const { ethers } = require('ethers');
-const fs = require('fs');
-const { HttpsProxyAgent } = require('https-proxy-agent');
+const fs = require('fs'); // Still needed for reading private keys if you switch from .env
+// const { HttpsProxyAgent } = require('https-proxy-agent'); // Removed
 const randomUseragent = require('random-useragent');
 const axios = require('axios');
 const colors = {
@@ -29,12 +29,9 @@ const logger = {
     console.log('██╔══██╗██║░░██║██╔══██╗██╔══██╗██╔══██╗██╔════╝  ██╔══██╗██║░░░██║╚══██╔══╝██╔══██╗  ╚══██╔══╝╚██╗██╔╝');
     console.log('██████╔╝███████║███████║██████╔╝██║░░██║╚█████╗░  ███████║██║░░░██║░░░██║░░░██║░░██║  ░░░██║░░░░╚███╔╝░');
     console.log('██╔═══╝░██╔══██║██╔══██║██╔══██╗██║░░██║░╚═══██╗  ██╔══██║██║░░░██║░░░██║░░░██║░░██║  ░░░██║░░░░██╔██╗░');
-    console.log('██║░░░░░██║░░██║██║░░██║██║░░██║╚█████╔╝██████╔╝  ██║░░██║╚██████╔╝░░░██║░░░╚█████╔╝  ░░░██║░░░██╔╝╚██╗');
+    console.log('██║░░░░░██║░░██║██║░░██║██║░░██║╚█████╔╝██████╔╝  ██║░░██║╚██████╔╝░░░██║░░░╚█████╔╝  ░░░╚═╝░░░██╔╝╚██╗');
     console.log('╚═╝░░░░░╚═╝░░╚═╝╚═╝░░╚═╝╚═╝░░╚═╝░╚════╝░╚═════╝░  ╚═╝░░╚═╝░╚═════╝░░░░╚═╝░░░░╚════╝░  ░░░╚═╝░░░╚═╝░░╚═╝');
     console.log('\nby Kazmight');
-    console.log('-------------------------------------------------');
-    console.log(' Pharos Testnet Multi Bot - Cryptodai3');
-    console.log('-------------------------------------------------');
     console.log(`${colors.reset}\n`);
   },
 };
@@ -136,41 +133,19 @@ const lpOptions = [
   { id: 2, token0: 'WPHRS', token1: 'USDT', amount0: 0.01, amount1: 0.01, fee: 3000 },
 ];
 
+// Removed loadProxies function
 const loadProxies = () => {
-  try {
-    const proxies = fs.readFileSync('proxies.txt', 'utf8')
-      .split('\n')
-      .map(line => line.trim())
-      .filter(line => line);
-    return proxies;
-  } catch (error) {
-    logger.warn('No proxies.txt found or failed to load, switching to direct mode');
-    return [];
-  }
+  logger.warn('Proxy functionality removed. Running in direct mode.');
+  return []; // Always return an empty array
 };
 
-const getRandomProxy = (proxies) => {
-  return proxies[Math.floor(Math.random() * proxies.length)];
-};
-
-const setupProvider = (proxy = null) => {
-  if (proxy) {
-    logger.info(`Using proxy: ${proxy}`);
-    const agent = new HttpsProxyAgent(proxy);
-    return new ethers.JsonRpcProvider(networkConfig.rpcUrl, {
-      chainId: networkConfig.chainId,
-      name: networkConfig.name,
-    }, {
-      fetchOptions: { agent },
-      headers: { 'User-Agent': randomUseragent.getRandom() },
-    });
-  } else {
-    logger.info('Using direct mode (no proxy)');
-    return new ethers.JsonRpcProvider(networkConfig.rpcUrl, {
-      chainId: networkConfig.chainId,
-      name: networkConfig.name,
-    });
-  }
+// Simplified setupProvider - no longer takes a proxy argument
+const setupProvider = () => {
+  logger.info('Using direct mode (no proxy)');
+  return new ethers.JsonRpcProvider(networkConfig.rpcUrl, {
+    chainId: networkConfig.chainId,
+    name: networkConfig.name,
+  });
 };
 
 const checkBalanceAndApproval = async (wallet, tokenAddress, amount, decimals, spender) => {
@@ -211,9 +186,10 @@ const checkBalanceAndApproval = async (wallet, tokenAddress, amount, decimals, s
   }
 };
 
-const getUserInfo = async (wallet, proxy = null, jwt) => {
+// Removed proxy argument from getUserInfo
+const getUserInfo = async (wallet, jwt) => {
   try {
-    logger.user(`Fetching user info for wallet: ${wallet.address}`);
+    logger.user(`Workspaceing user info for wallet: ${wallet.address}`);
     const profileUrl = `https://api.pharosnetwork.xyz/user/profile?address=${wallet.address}`;
     const headers = {
       accept: "application/json, text/plain, */*",
@@ -235,7 +211,7 @@ const getUserInfo = async (wallet, proxy = null, jwt) => {
       method: 'get',
       url: profileUrl,
       headers,
-      httpsAgent: proxy ? new HttpsProxyAgent(proxy) : null,
+      // httpsAgent: proxy ? new HttpsProxyAgent(proxy) : null, // Removed
     };
 
     logger.loading('Fetching user profile...');
@@ -440,7 +416,8 @@ const wrapPHRS = async (wallet, provider, index) => {
   }
 };
 
-const claimFaucet = async (wallet, proxy = null) => {
+// Removed proxy argument from claimFaucet
+const claimFaucet = async (wallet) => {
   try {
     logger.step(`Checking faucet eligibility for wallet: ${wallet.address}`);
 
@@ -469,7 +446,7 @@ const claimFaucet = async (wallet, proxy = null) => {
       method: 'post',
       url: loginUrl,
       headers,
-      httpsAgent: proxy ? new HttpsProxyAgent(proxy) : null,
+      // httpsAgent: proxy ? new HttpsProxyAgent(proxy) : null, // Removed
     };
 
     logger.loading('Sending login request for faucet...');
@@ -495,7 +472,7 @@ const claimFaucet = async (wallet, proxy = null) => {
       method: 'get',
       url: statusUrl,
       headers: statusHeaders,
-      httpsAgent: proxy ? new HttpsProxyAgent(proxy) : null,
+      // httpsAgent: proxy ? new HttpsProxyAgent(proxy) : null, // Removed
     });
     const statusData = statusResponse.data;
 
@@ -516,7 +493,7 @@ const claimFaucet = async (wallet, proxy = null) => {
       method: 'post',
       url: claimUrl,
       headers: statusHeaders,
-      httpsAgent: proxy ? new HttpsProxyAgent(proxy) : null,
+      // httpsAgent: proxy ? new HttpsProxyAgent(proxy) : null, // Removed
     });
     const claimData = claimResponse.data;
 
@@ -533,7 +510,8 @@ const claimFaucet = async (wallet, proxy = null) => {
   }
 };
 
-const performCheckIn = async (wallet, proxy = null) => {
+// Removed proxy argument from performCheckIn
+const performCheckIn = async (wallet) => {
   try {
     logger.step(`Performing daily check-in for wallet: ${wallet.address}`);
 
@@ -562,7 +540,7 @@ const performCheckIn = async (wallet, proxy = null) => {
       method: 'post',
       url: loginUrl,
       headers,
-      httpsAgent: proxy ? new HttpsProxyAgent(proxy) : null,
+      // httpsAgent: proxy ? new HttpsProxyAgent(proxy) : null, // Removed
     };
 
     logger.loading('Sending login request...');
@@ -588,7 +566,7 @@ const performCheckIn = async (wallet, proxy = null) => {
       method: 'post',
       url: checkInUrl,
       headers: checkInHeaders,
-      httpsAgent: proxy ? new HttpsProxyAgent(proxy) : null,
+      // httpsAgent: proxy ? new HttpsProxyAgent(proxy) : null, // Removed
     });
     const checkInData = checkInResponse.data;
 
@@ -628,8 +606,8 @@ const addLiquidity = async (wallet, provider, index) => {
 
     const positionManager = new ethers.Contract(tokens.POSITION_MANAGER, positionManagerAbi, wallet);
 
-    const deadline = Math.floor(Date.now() / 1000) + 600; 
-    const tickLower = -60000; 
+    const deadline = Math.floor(Date.now() / 1000) + 600;
+    const tickLower = -60000;
     const tickUpper = 60000;
 
     const mintParams = {
@@ -695,31 +673,34 @@ const countdown = async () => {
 const main = async () => {
   logger.banner();
 
-  const proxies = loadProxies();
+  // const proxies = loadProxies(); // Removed proxy loading
+  // fs is not needed anymore if you solely rely on .env for private keys.
+  // const privateKeys = fs.readFileSync('privateKeys.txt', 'utf8').split('\n').map(line => line.trim()).filter(line => line);
   const privateKeys = [process.env.PRIVATE_KEY_1, process.env.PRIVATE_KEY_2].filter(pk => pk);
+
   if (!privateKeys.length) {
     logger.error('No private keys found in .env');
     return;
   }
 
-  const numTransfers = 10; 
-  const numWraps = 10; 
-  const numSwaps = 10; 
-  const numLPs = 10; 
+  const numTransfers = 10;
+  const numWraps = 10;
+  const numSwaps = 10;
+  const numLPs = 10;
 
   while (true) {
     for (const privateKey of privateKeys) {
-      const proxy = proxies.length ? getRandomProxy(proxies) : null;
-      const provider = setupProvider(proxy);
+      // const proxy = proxies.length ? getRandomProxy(proxies) : null; // Removed proxy selection
+      const provider = setupProvider(); // Simplified provider setup
       const wallet = new ethers.Wallet(privateKey, provider);
 
       logger.wallet(`Using wallet: ${wallet.address}`);
 
-      await claimFaucet(wallet, proxy);
+      await claimFaucet(wallet); // Removed proxy argument
+      const jwt = await performCheckIn(wallet); // Removed proxy argument
 
-      const jwt = await performCheckIn(wallet, proxy);
       if (jwt) {
-        await getUserInfo(wallet, proxy, jwt);
+        await getUserInfo(wallet, jwt); // Removed proxy argument
       } else {
         logger.error('Skipping user info fetch due to failed check-in');
       }
