@@ -34,3 +34,17 @@ To run the bot, use the following command in your terminal:
 ```bash
 node index.js
 ```
+
+
+## ⚙️ Configuration
+
+1. **in the project root directory with your private keys `.env`**
+   ```
+   # For a single wallet
+   PRIVATE_KEY=your_private_key_here
+
+   # OR for multiple wallets
+   PRIVATE_KEY_1=your_first_private_key
+   PRIVATE_KEY_2=your_second_private_key
+   PRIVATE_KEY_3=your_third_private_key
+   ```
