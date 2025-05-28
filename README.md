@@ -19,7 +19,7 @@ Welcome to the **Pharos Testnet Automated Transaction** repository! This project
 ## Installation
 
 ```bash
-https://github.com/kazmight/Pharos-Auto-TX.git
+git clone https://github.com/kazmight/Pharos-Auto-TX.git
 cd Pharos-Auto-TX
 ```
 
