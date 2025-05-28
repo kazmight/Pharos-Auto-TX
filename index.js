@@ -781,14 +781,14 @@ const main = async () => {
         return;
     }
 
-    const numTransfers = 5; // Reduced for less spam on testnet
-    const numWraps = 5;     // Reduced
-    const numSwaps = 5;     // Reduced
-    const numLPs = 5;       // Reduced
+    const numTransfers = 1; // Reduced for less spam on testnet
+    const numWraps = 1;     // Reduced
+    const numSwaps = 1;     // Reduced
+    const numLPs = 1;       // Reduced
 
     // Increased delays for better network stability and to avoid TX_REPLAY_ATTACK
     const minDelayMs = 10 * 1000; // 10 seconds
-    const maxDelayMs = 15 * 1000; // 25 seconds
+    const maxDelayMs = 15 * 15000; // 25 seconds
 
     while (true) {
         for (const privateKey of privateKeys) {
