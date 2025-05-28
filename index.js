@@ -788,7 +788,7 @@ const main = async () => {
 
     // Increased delays for better network stability and to avoid TX_REPLAY_ATTACK
     const minDelayMs = 10 * 1000; // 10 seconds
-    const maxDelayMs = 15 * 15000; // 25 seconds
+    const maxDelayMs = 15 * 1500; // 25 seconds
 
     while (true) {
         for (const privateKey of privateKeys) {
