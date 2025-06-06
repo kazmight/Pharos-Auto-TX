@@ -27,7 +27,6 @@ const logger = {
   user: (msg) => console.log(`\n${colors.white}[➤] ${msg}${colors.reset}`),
   banner: () => {
     console.log(`${colors.cyan}${colors.bold}`);
-    console.log('
 console.log('██████╗░██╗░░██╗░█████╗░██████╗░░█████╗░░██████╗');
 console.log('██╔══██╗██║░░██║██╔══██╗██╔══██╗██╔══██╗██╔════╝');
 console.log('██████╔╝███████║███████║██████╔╝██║░░██║╚█████╗░');
